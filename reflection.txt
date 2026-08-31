@@ -1,0 +1,9 @@
+Unit 3 Reflection: Modular Engineering Application Development
+
+In Unit 3, I engineered a modular Python application structured across specialized script files: ohms_law.py, unit_converter.py, converter_cli.py, and engineer_calc.py. Separating core mathematical functions from execution scripts reinforced modular programming design principles, making code testing and reusability clean and manageable.
+
+Automated testing using assert statements ensured floating-point precision for electrical formulas and unit conversions. Standardizing outputs with round() prevented assertion failures caused by minor precision variances. Additionally, documenting each function using standard docstrings and displaying them via the __doc__ attribute established high code documentation standards.
+
+To improve user experience and program stability, I incorporated robust error handling. Wrapping numeric parsing in try-except blocks successfully caught ZeroDivisionError and non-numeric ValueError inputs, preventing runtime crashes.
+
+Finally, utilizing Git version control—staging commits, removing untracked build caches, creating release tags like v1.0-engineer-calc, and pushing to GitHub—provided practical experience with professional software delivery workflows. This unit underscored the critical connection between clean module architecture, defensive error handling, automated verification, and version management.
