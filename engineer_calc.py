@@ -23,67 +23,77 @@ def build_menu():
 
 
 def display_menu():
-    """Print the menu by iterating over the options from build_menu."""
+    """Print the menu by iterating over options from build_menu."""
     options = build_menu()
     print("\n--- Engineering Calculator Menu ---")
     for index, option in enumerate(options, start=1):
         print(f"{index}. {option}")
 
 
+def safe_float_input(prompt):
+    """Prompt for user input and convert to float, raising ValueError on failure."""
+    raw_val = input(prompt)
+    return float(raw_val)
+
+
 def main():
     running = True
     while running:
         display_menu()
-        choice = input("Select an option: ")
+        choice = input("Select an option (1-7): ")
 
-        if choice == "1":
-            voltage = float(input("Enter voltage (V): "))
-            current_input = input(
-                "Enter current (A) or press Enter for default: "
-            )
+        try:
+            if choice == "1":
+                voltage = safe_float_input("Enter voltage (V): ")
+                current_input = input(
+                    "Enter current (A) or press Enter for default: "
+                )
+                current = (
+                    DEFAULT_CURRENT
+                    if current_input == ""
+                    else float(current_input)
+                )
 
-            if current_input == "":
-                current = DEFAULT_CURRENT
+                try:
+                    resistance = calc_resistance(voltage, current)
+                    print(f"Resistance = {resistance:.2f} ohms")
+                except ZeroDivisionError:
+                    print("Error: Current cannot be zero.")
+
+            elif choice == "2":
+                voltage = safe_float_input("Enter voltage (V): ")
+                resistance = safe_float_input("Enter resistance (ohms): ")
+                try:
+                    power = calc_power(voltage, resistance)
+                    print(f"Power = {power:.2f} W")
+                except ZeroDivisionError:
+                    print("Error: Resistance cannot be zero.")
+
+            elif choice == "3":
+                val = safe_float_input("Enter measurement in mm: ")
+                print(f"Converted value: {mm_to_inches(val):.2f} inches")
+
+            elif choice == "4":
+                val = safe_float_input("Enter measurement in inches: ")
+                print(f"Converted value: {inches_to_mm(val):.2f} mm")
+
+            elif choice == "5":
+                val = safe_float_input("Enter measurement in cm: ")
+                print(f"Converted value: {cm_to_inches(val):.2f} inches")
+
+            elif choice == "6":
+                val = safe_float_input("Enter measurement in inches: ")
+                print(f"Converted value: {inches_to_cm(val):.2f} cm")
+
+            elif choice == "7":
+                running = False
+                print("Program closed.")
+
             else:
-                current = float(current_input)
+                print("Invalid menu option.")
 
-            try:
-                resistance = calc_resistance(voltage, current)
-                print("Resistance =", resistance, "ohms")
-            except ZeroDivisionError:
-                print("Error: Current cannot be zero.")
-
-        elif choice == "2":
-            voltage = float(input("Enter voltage (V): "))
-            resistance = float(input("Enter resistance (ohms): "))
-            try:
-                power = calc_power(voltage, resistance)
-                print("Power =", power, "W")
-            except ZeroDivisionError:
-                print("Error: Resistance cannot be zero.")
-
-        elif choice == "3":
-            value = float(input("Enter measurement in mm: "))
-            print("Converted value:", mm_to_inches(value), "inches")
-
-        elif choice == "4":
-            value = float(input("Enter measurement in inches: "))
-            print("Converted value:", inches_to_mm(value), "mm")
-
-        elif choice == "5":
-            value = float(input("Enter measurement in cm: "))
-            print("Converted value:", cm_to_inches(value), "inches")
-
-        elif choice == "6":
-            value = float(input("Enter measurement in inches: "))
-            print("Converted value:", inches_to_cm(value), "cm")
-
-        elif choice == "7":
-            running = False
-            print("Program closed.")
-
-        else:
-            print("Invalid menu option.")
+        except ValueError:
+            print("Error: Invalid input. Please enter numbers only.")
 
 
 if __name__ == "__main__":
