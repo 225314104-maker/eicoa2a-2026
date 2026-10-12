@@ -1,0 +1,5 @@
+Engineering Weight Summary
+--------------------------
+Valid components: 0
+Total weight: 0.00
+Average weight: 0.00
